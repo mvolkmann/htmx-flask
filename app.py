@@ -2,7 +2,6 @@ from flask import Flask, make_response, redirect, render_template, request, Resp
 import uuid
 
 dog_map = {}
-
 selected_id = '';
 
 def add_dog(name, breed):
@@ -14,6 +13,7 @@ def add_dog(name, breed):
 add_dog('Comet', 'Whippet')
 add_dog('Oscar', 'German Shorthaired Pointer')
 
+# __name__ holds the name of the current module which is "app".
 app = Flask(__name__)
 
 @app.route('/')
