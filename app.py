@@ -1,5 +1,3 @@
-#!/bin/python
-
 from flask import Flask, make_response, redirect, render_template, request, Response
 import uuid
 
@@ -61,7 +59,6 @@ def form():
 # Gets table rows for all the dogs.
 @app.route('/rows')
 def rows():
-    print('rows =', dog_map)
     sorted_dogs = sorted(dog_map.values(), key=lambda x: x['name'])
     return render_template('dog-rows.html', dogs=sorted_dogs)
 
@@ -92,8 +89,8 @@ def update(id):
     global dog_map
     dog_map[id] = updatedDog;
 
-    global selectedId
-    selectedId = '';
+    global selected_id
+    selected_id = '';
 
     res = make_response(
         render_template('dog-row.html', dog=updatedDog, swap=True)
