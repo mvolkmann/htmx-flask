@@ -61,6 +61,7 @@ def form():
 # Gets table rows for all the dogs.
 @app.route('/rows')
 def rows():
+    print('rows =', dog_map)
     sorted_dogs = sorted(dog_map.values(), key=lambda x: x['name'])
     return render_template('dog-rows.html', dogs=sorted_dogs)
 
@@ -87,6 +88,7 @@ def update(id):
     name = request.form.get('name')
     breed = request.form.get('breed')
     updatedDog = {id, name, breed};
+    print('updatedDog', updatedDog)
 
     global dog_map
     dog_map[id] = updatedDog;
@@ -95,7 +97,7 @@ def update(id):
     selectedId = '';
 
     res = make_response(
-        render_template('dog_row.html', dog=updatedDog, swap=True)
+        render_template('dog-row.html', dog=updatedDog, swap=True)
     )
     res.headers['HX-Trigger'] = 'selection-change'
     return res
