@@ -37,7 +37,9 @@
       {% if dog is none %} Add {% else %} Update {% endif %}
     </button>
     {% if dog is not none %}
-    <button hx-get="/deselect" hx-swap="none" type="button">Cancel</button>
+      <button hx-get="/deselect" hx-swap="none" type="button">
+        Cancel
+      </button>
     {% endif %}
   </div>
 </form>
