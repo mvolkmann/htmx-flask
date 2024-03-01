@@ -8,6 +8,6 @@ Here are the steps I took to create this project.
 - `. .venv/bin/activate`
 - `pip install Flask`
 - `pip install requests`
-- Create the file `server.py`.
+- Create all the files in this repo.
 - Start the server by entering `./run`
 - Browse localhost:5000
