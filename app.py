@@ -1,6 +1,6 @@
 #!/bin/python
 
-from flask import Flask, redirect, render_template, request, Response
+from flask import Flask, make_response, redirect, render_template, request, Response
 import uuid
 
 dog_map = {}
@@ -15,12 +15,6 @@ def add_dog(name, breed):
 
 add_dog('Comet', 'Whippet')
 add_dog('Oscar', 'German Shorthaired Pointer')
-
-def dog_row(_dog, updating):
-  _attrs = {};
-  if updating:
-     _attrs['hx-swap-oob'] = 'true';
-  return render_template('dog_row.html', dog=_dog, swap=updating)
 
 app = Flask(__name__)
 
@@ -45,6 +39,7 @@ def one_dog(id):
 # Deletes the dog with a given id.
 @app.route('/dog/<id>', methods=['DELETE'])
 def delete_dog(id):
+    global dog_map
     del dog_map[id]
     return ''
 
@@ -61,17 +56,12 @@ def deselect():
 @app.route('/form')
 def form():
     _dog = dog_map.get(selected_id)
-    return render_template(
-        'form.html',
-        id=selected_id,
-        dog=_dog
-    )
+    return render_template('form.html', dog=_dog)
 
 # Gets table rows for all the dogs.
 @app.route('/rows')
 def rows():
     sorted_dogs = sorted(dog_map.values(), key=lambda x: x['name'])
-    print('sorted_dogs:', sorted_dogs)
     return render_template('dog-rows.html', dogs=sorted_dogs)
 
 # Selects a dog.
@@ -88,8 +78,8 @@ def select(id):
 def create():
     name = request.form.get('name')
     breed = request.form.get('breed')
-    _dog = add_dog(name, breed);
-    return render_template('dog-row.html', dog=_dog, status=201);
+    new_dog = add_dog(name, breed);
+    return render_template('dog-row.html', dog=new_dog, status=201);
 
 # Updates a dog
 @app.route('/dog/<id>', methods=['PUT'])
@@ -98,12 +88,14 @@ def update(id):
     breed = request.form.get('breed')
     updatedDog = {id, name, breed};
 
-    global dogs
-    dogs[id] = updatedDog;
+    global dog_map
+    dog_map[id] = updatedDog;
 
     global selectedId
     selectedId = '';
 
-    res = Response(dog_row(updatedDog, True))
+    res = make_response(
+        render_template('dog_row.html', dog=updatedDog, swap=True)
+    )
     res.headers['HX-Trigger'] = 'selection-change'
     return res
