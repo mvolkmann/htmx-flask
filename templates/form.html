@@ -1,0 +1,42 @@
+<!--
+  {% if id != 0 %}
+    hx-put="/dog/{{id}}"
+  {% else %}
+    hx-post="/dog"
+    hx-target="tbody"
+    hx-swap="afterbegin"
+  {% endif %}
+ -->
+<form hx-disabled-elt="#submit-btn" hx-on:htmx:after-request="this.reset()">
+  <div>
+    <label for="name">Name</label>
+    <input
+      id="name"
+      name="name"
+      required
+      size="{30}"
+      type="text"
+      value="{{dog.name or ''}}"
+    />
+  </div>
+  <div>
+    <label for="breed">Breed</label>
+    <input
+      id="breed"
+      name="breed"
+      required
+      size="{30}"
+      type="text"
+      value="{{dog.breed or ''}}"
+    />
+  </div>
+
+  <div class="buttons">
+    <button id="submit-btn">
+      {% if id == 0 %} Add {% else %} Update {% endif %}
+    </button>
+    {% if id != 0 %}
+    <button hx-get="/deselect" hx-swap="none" type="button">Cancel</button>
+    {% endif %}
+  </div>
+</form>
