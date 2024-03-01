@@ -26,13 +26,8 @@ def all_dogs():
 
 @app.route('/dogs/<id>')
 def one_dog(id):
-    # Parameter names and values cannot match (ex. cannot have dogs=dogs).
-    _dog = dog_map[id]
-    return render_template(
-        'dog.html',
-        title=_dog['name'],
-        dog=_dog
-    )
+    dog = dog_map[id]
+    return dog # returns JSON
 
 # Deletes the dog with a given id.
 @app.route('/dog/<id>', methods=['DELETE'])
@@ -53,8 +48,8 @@ def deselect():
 # Gets the proper form for either adding or updating a dog.
 @app.route('/form')
 def form():
-    _dog = dog_map.get(selected_id)
-    return render_template('form.html', dog=_dog)
+    dog = dog_map.get(selected_id)
+    return render_template('form.html', dog=dog)
 
 # Gets table rows for all the dogs.
 @app.route('/rows')
