@@ -87,8 +87,7 @@ def create():
 def update(id):
     name = request.form.get('name')
     breed = request.form.get('breed')
-    updatedDog = {id, name, breed};
-    print('updatedDog', updatedDog)
+    updatedDog = {'id': id, 'name': name, 'breed': breed};
 
     global dog_map
     dog_map[id] = updatedDog;

@@ -1,8 +1,8 @@
 <tr
   class="on-hover"
   id="row-{{dog.id}}"
-  {% if swap == True %}
-  hx-swap-oob="true"
+  {% if swap %}
+    hx-swap-oob="true"
   {% endif %}
 >
   <td>{{dog.name}}</td>
