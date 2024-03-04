@@ -81,10 +81,8 @@ def update(id):
     breed = request.form.get('breed')
     updatedDog = {'id': id, 'name': name, 'breed': breed};
 
-    global dog_map
+    global dog_map, selected_id
     dog_map[id] = updatedDog;
-
-    global selected_id
     selected_id = '';
 
     res = make_response(
