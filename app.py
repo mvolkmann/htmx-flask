@@ -90,3 +90,9 @@ def update(id):
     )
     res.headers['HX-Trigger'] = 'selection-change'
     return res
+
+# Test whether HTML is sanitized.
+@app.route('/xss')
+def xss():
+    name = 'Comet <script>alert("hi")</script>'
+    return render_template('xss.html', name=name)
